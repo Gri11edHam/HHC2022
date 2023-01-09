@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HHC 2022 Write-Up | BROF</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" href="./assets/style/main.css">
+		<script src="./assets/js/main.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="navigation">
+			<h1 class="title">HHC 2022 Write-Up</h1>
+			<a href="./index.html">Home</a>
+			<a href="./orientation.html">Orientation</a>
+			<a href="./tolkien_ring.html">Tolkien Ring</a>
+			<a href="./elfen_ring.html">Elfen Ring</a>
+			<a href="./web_ring.html">Web Ring</a>
+			<a href="./cloud_ring.html">Cloud Ring</a>
+			<a href="./brof.html">Burning Ring of Fire</a>
+		</div>
+		<div class="page">
+			<h1>Recover the Burning Ring of Fire</h1>
+			<p>Enter through the Burning Ring of Fire door to help the elfs thwart the sporcs' NFT scheme.</p>
+			<div class="table_of_contents">
+				<h2 class="title">Contents</h2>
+				<a href="#objective1">Buy a Hat</a>
+				<a href="#objective2">Blockchain Divination</a>
+				<a href="#objective3">Exploit a Smart Contract</a>
+			</div>
+			<div class="section" id="objective1">
+				<h1>1. Buy a Hat <span style="color: #ee0e0e;">★★</span><span style="color: #ffffff">★★★</span></h1>
+				<div class="contents">
+					Buy a hat using the KTM and Hat Vending Machine.<br><br>
+					To buy a hat, first find a hat that you like.<br>
+					Next, go to a KTM and approve a transfer to the address provided by the Hat Vending Machine.<br>
+					Last, go back to the Hat Vending Machine and click the "Click here to buy" button.<br>
+					Enter your wallet address and hat ID to make the purchase.<br><br>
+					<img src="./assets/img/buy-a-hat.png">
+				</div>
+			</div>
+			<div class="section" id="objective2">
+				<h1>2. Blockchain Divination <span style="color: #ee0e0e;">★★★★</span><span style="color: #ffffff">★</span></h1>
+				<div class="contents">
+					Use the Blockchain Explorer to find the address at which the KringleCoin smart contract is deployed.<br><br>
+					Starting at block 0, make your way through the blocks until you find one that creates a smart contract.<br>
+					If the smart contract is called KringleCoin, you have found the correct block.<br><br>
+					<img src="./assets/img/blockchain-divination.png">
+				</div>
+			</div>
+			<div class="section" id="objective3">
+				<h1>3. Exploit a Smart Contract <span style="color: #ee0e0e;">★★★★★</span></h1>
+				<div class="contents">
+					Use the Blockchain Explorer to find the Bored Sporc NFT smart contract and exploit it to buy an NFT.<br><br>
+					The Bored Sporc NFT smart contract can be found at block 2 using the Blockchain Explorer.<br>
+					Looking through the smart contract, you will find the following function:<br><br>
+					<code class="code_large">function verify(bytes32 leaf, bytes32 _root, bytes32[] memory proof) public view returns (bool) {
+	bytes32 computedHash = leaf;
+	for (uint i = 0; i < proof.length; i++) {
+		bytes32 proofElement = proof[i];
+		if (computedHash <= proofElement) {
+			computedHash = keccak256(abi.encodePacked(computedHash, proofElement));
+		} else {
+			computedHash = keccak256(abi.encodePacked(proofElement, computedHash));
+		}
+	}
+	return computedHash == _root;
+}</code><br>
+					This function takes a leaf (your wallet address), a root, and proofs.<br>
+					If we can control all three arguments, we can easily buy an NFT.<br>
+					When you try to order an NFT on the presale page, the following is posted from your browser:<br><br>
+					<code>{"WalletID":"","Root":"0x52cfdfdcba8efebabd9ecc2c60e6f482ab30bdc6acf8f9bd0600de83701e15f1","Proof":"","Validate":"true","Session":"22b05352-21bb-4713-a3a5-cd9c1cbe6aae"}</code><br>
+					All three of the arguments are posted, so we can intercept the packet using <a href="https://www.zaproxy.org/" target="_blank">ZAP</a> and modify the arguments.<br>
+					Our own root and proofs can be generated using <a href="https://github.com/QPetabyte/Merkle_Trees" target="_blank">this repo</a>.<br><br>
+					<img src="./assets/img/exploit-a-smart-contract.png" width="852.733" style="margin-right: 20px;">
+					<img src="./assets/img/BSRS376.png" width="284.45">
+				</div>
+			</div>
+			<div class="section">
+				<div class="contents">
+					<img src="./assets/img/brof.png">
+				</div>
+			</div>
+			<div class="section">
+				<div class="contents">
+					<p>And with that, Christmas is saved from another catastrophe.</p>
+					<p>Thanks to SANS and CounterHack for another great Holiday Hack Challenge.</p>
+				</div>
+			</div>
+		</div>
+		<div class="next_prev">
+			<a class="prev" href="./cloud_ring.html">Previous</a>
+		</div>
+		<footer>
+			<div class="float_left">Brian DeBaggis</div>
+			<div class="right">1/6/2023</div>
+		</footer>
+	</body>
+</html>

